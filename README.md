@@ -22,6 +22,12 @@ npm run preview
 
 ---
 
+## カスタムスタンプの追加
+
+`src/components/StampMenu.tsx` から追加したスタンプは `localStorage` に保存され、次回以降のファイル読み込み時にも利用できます。任意のスタンプを入力して `追加` ボタンを押してください。
+
+---
+
 ## 2. `public` ディレクトリ
 
 ### `public/manifest.webmanifest`
