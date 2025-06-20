@@ -1,12 +1,13 @@
 import { isJsonFile, readJson } from '../utils/fileHelpers';
 import { AnnotatorFile } from '../types/models';
-import { importPdf } from '../hooks/usePdf';
+import { importPdf, ImportProgress } from '../hooks/usePdf';
 
 interface Props {
   onLoad: (data: AnnotatorFile, originalBuf: ArrayBuffer) => void;
+  onProgress?: (p: ImportProgress) => void;
 }
 
-export default function DropZone({ onLoad }: Props) {
+export default function DropZone({ onLoad, onProgress }: Props) {
   const handleFiles = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
     const file = files[0];
@@ -18,7 +19,7 @@ export default function DropZone({ onLoad }: Props) {
         data = await readJson(file);
         buf = new ArrayBuffer(0); // JSON の場合は空で
       } else {
-        const res = await importPdf(file);
+        const res = await importPdf(file, onProgress);
         data = res.data;
         buf = res.buf;
       }
